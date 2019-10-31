@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mt-3">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{% url 'shop-index' %}">店家資訊</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">新增{{ shop_obj.name }}的訂單</li>
+        </ol>
+    </nav>
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="form-row mt-3">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">{{ form_obj.initiator.label }}</label>
+                {{ form_obj.initiator }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputAddress">{{ form_obj.release_date.label }}</label>
+            {{ form_obj.release_date }}
+
+
+            <input class="form-group" id="release_time" value="">
+            <span class="input-group-addon">
+        <span class="glyphicon glyphicon-time"></span>
+            </span>
+        </div>
+        <div class="form-group">
+            <label for="inputAddress">{{ form_obj.deadline_date.label }}</label>
+            {{ form_obj.deadline_date }}
+        </div>
+        <div class="form-group">
+            <label for="inputAddress">{{ form_obj.info.label }}</label>
+            {{ form_obj.info }}
+        </div>
+        <button type="submit" class="btn btn-info">送出</button>
+    </form>
+
+
+
+{% endblock %}
+
+{% block extra-js %}
+
+    <script type="text/javascript">
+        var myDate = new Date();
+
+        $('#release_time').clockpicker({
+            autoclose: true,
+            'default': 'now',
+            init: function () {
+                console.log("colorpicker initiated");
+                $('#release_time').val(myDate.toLocaleTimeString('it-IT').substring(0,5))
+
+            },
+            afterDone: function () {
+                console.log("after done");
+            }
+        })
+    </script>
+
+
+{% endblock %}
